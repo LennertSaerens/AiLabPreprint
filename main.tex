@@ -1,14 +1,318 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+% !TeX program = lualatex
+% START HERE: this document is both the template showcase and its user guide.
+% For a clean manuscript, copy starter.tex to main.tex (keep a copy of this guide).
+\documentclass[11pt]{article}
+\usepackage[triangle]{ailab-preprint}
 
-\title{AI-lab Preprint Template}
-\author{Lennert Saerens}
-\date{November 2026}
+% ---------- Paper metadata: all front matter is left aligned ----------
+\title{A template for AI research\\at Vrije Universiteit Brussel}
+\author{First Author\affil{1}, Second Author\affil{1,2}, Third Author\affil{2}}
+\affiliations{\affil{1}Artificial Intelligence Lab, Vrije Universiteit Brussel, Belgium\\
+  \affil{2}Collaborating institution, City, Country}
+\date{Template guide · 17 November 2026}
+\preprintabstract{This document is a working template and a short guide for AI research preprints. It demonstrates a single-column layout, collaborative author lists, mathematical statements, pseudocode, numerical results, references, and supplementary material. The opening panel groups the title, authors, and affiliations, followed by a justified abstract; the body uses Libertinus Serif with Libertinus Math. Replace the examples with your research and keep the shared style file unchanged. All numerical results in this guide are illustrative.}
+\keywords{research preprints; machine learning; scientific writing}
 
 \begin{document}
-
 \maketitle
 
-\section{Introduction}
+\section{Start writing in minutes}
+The template keeps formatting in \texttt{ailab-preprint.sty} and research in your
+\texttt{.tex} and \texttt{.bib} files. You can write a complete paper without editing
+the style. The clean starting point is \texttt{starter.tex}; this guide is
+\texttt{main.tex}. Use one as your main document at a time.
 
+\subsection{Open the project in Overleaf}
+\begin{enumerate}
+  \item Upload the supplied ZIP through \textbf{New project > Existing project (.zip)}.
+  \item Open project \textbf{Settings > Compiler}; choose \textbf{LuaLaTeX} and a
+        recent TeX Live version (tested locally with TeX Live 2025).
+  \item Compile \texttt{main.tex} to read this guide. For your paper, replace its
+        contents with \texttt{starter.tex}, then edit the metadata and sections.
+  \item Replace \texttt{references.bib} with your bibliography and recompile.
+        Overleaf runs BibTeX automatically when needed.
+\end{enumerate}
+The project needs no shell escape, logo files, or external code highlighting tools.
+For the official title font, add the supplied VUB font file as described below. LuaLaTeX loads the requested OpenType fonts directly from TeX Live. Locally, run \texttt{latexmk main.tex}; the included
+\texttt{.latexmkrc} selects LuaLaTeX.
+
+\subsection{A restrained research identity}
+The palette follows the supplied VUB guide (PDF page 13, printed page 18): blue
+\texttt{\#003399}, orange \texttt{\#FF6600}, and gray-blue \texttt{\#E8EBF1}.
+The panel uses a lighter tint of gray-blue. Blue carries hierarchy and links;
+orange is available as \texttt{VUBOrange} for occasional accents. This is a
+research layout informed by the guide. The title uses ITC Avant Garde Gothic Bold
+when \texttt{fonts/ITCAvantGardePro-Bold.otf} is supplied. Until then, the preview
+uses TeX Gyre Adventor, a substitute, not the official font. Body text and mathematics
+retain Libertinus. No full institutional logos are used.
+
+\clearpage % Guide-only page breaks; remove these when writing a paper.
+\section{Authors, structure, and everyday writing}
+\subsection{Edit the front matter in one place}
+Metadata commands go before \verb|\begin{document}|. The superscript helper
+\verb|\affil{1,2}| associates authors with any number of institutions. Use explicit
+line breaks between affiliations, and let long author lists wrap naturally.
+\begin{lstlisting}
+\title{A clear and informative research title}
+\author{First Author\affil{1}, Second Author\affil{1,2}}
+\affiliations{\affil{1}Artificial Intelligence Lab,
+  Vrije Universiteit Brussel, Belgium\\
+  \affil{2}Partner institution, City, Country}
+\preprintabstract{State the problem, approach, key evidence,
+  and implications in one or two short paragraphs.}
+\keywords{optional; semicolon-separated terms}
+\date{17 November 2026} % Optional explicit version date.
+\preprintnote{Optional equal-contribution or other author note.}
+\end{lstlisting}
+Call \verb|\maketitle| once after \verb|\begin{document}|; it prints the justified abstract
+below the panel. Do not add a second \texttt{abstract} environment. Omit any
+optional command to hide that row. A blank \verb|\date{}| hides the date. For a
+large collaboration, the panel can continue onto the next page. Keep the abstract
+concise so readers reach the paper quickly. Use \verb|\preprintnote| for
+contribution notes in the panel; ordinary body footnotes work normally.\footnote{A body footnote is set in smaller text with a conventional page-local rule.}
+
+\subsection{Organize the argument, then the source}
+A typical manuscript introduces the problem and related work, defines the setting,
+presents a method and analysis, evaluates it, and discusses limitations.
+\citet{saerensPreprint} provides an example combining theory, algorithms,
+benchmarks, and a real-world application. Sections can live in separate files:
+\begin{lstlisting}
+\section{Introduction}\label{sec:intro}
+\input{sections/introduction} % File contains prose, not a preamble.
+\subsection{Contributions}
+\paragraph{Scope.} A short run-in heading for a focused point.
+\end{lstlisting}
+The title panel takes its cue from the left-aligned opening of
+\citet{bessa2026emeans}. The rest of the page stays deliberately simple:
+A4, 25\,mm side margins, 11\,pt text, modest paragraph spacing, and centered
+page numbers. Section headings use the matching Libertinus Sans family.
+
+\subsection{Optional triangle and official title font}
+Use \verb|\usepackage[triangle]{ailab-preprint}| to show the orange VUB triangle
+to the left of the title, as in this guide. Omit \texttt{[triangle]} to hide it.
+The shape follows the guide's 69.25-degree diagonal (PDF page 32).
+To use the official title typeface in Overleaf, upload the licensed bold font as
+\texttt{fonts/ITCAvantGardePro-Bold.otf}; it is selected automatically.
+
+\subsection{Cite and cross-reference automatically}
+Use \verb|\citet{key}| for a narrative citation and \verb|\citep{key}| for a
+parenthetical citation, for example \citep{bessa2026emeans}. Put a
+\verb|\label| immediately after a heading or caption and use \verb|\cref| or
+\verb|\Cref|: \cref{tab:results,alg:loop} name their object types automatically.
+Use \verb|\eqref| for just a parenthesized equation number. Links are blue and
+remain legible in monochrome. Long URLs can wrap across lines.
+
+\clearpage
+\section{Mathematics, theory, and algorithms}
+Write inline mathematics as $x\in\mathbb{R}^{d}$ and use \texttt{equation} or
+\texttt{align} for numbered displays. Define paper-specific notation in your
+preamble; use \verb|\symbf{x}| for bold mathematical symbols and
+\verb|\operatorname| for named operators. Avoid loading legacy font packages
+such as \texttt{mathptmx}, \texttt{amssymb}, or \texttt{newtxmath} over
+\texttt{unicode-math}.
+\begin{align}
+  \widehat{L}_n(\theta) &= \frac{1}{n}\sum_{i=1}^{n}
+    \ell\bigl(f_\theta(x_i),y_i\bigr), \label{eq:risk}\\
+  \theta_{t+1} &= \theta_t-\eta_t\nabla\widehat{L}_n(\theta_t). \label{eq:update}
+\end{align}
+\begin{lstlisting}
+\begin{equation}\label{eq:objective}
+  \widehat{L}_n(\theta) = \frac{1}{n}
+    \sum_{i=1}^{n}\ell(f_\theta(x_i),y_i)
+\end{equation}
+Refer to \eqref{eq:objective}, or use \cref{eq:objective}.
+\end{lstlisting}
+
+\subsection{Definitions and proofs}
+The theorem family includes \texttt{theorem}, \texttt{lemma}, \texttt{proposition},
+and \texttt{corollary}, as well as \texttt{conjecture}. For supporting statements,
+use \texttt{definition}, \texttt{assumption}, \texttt{remark}, or \texttt{example}.
+All share a counter within each section. Use their optional argument for a descriptive name.
+\begin{assumption}[Bounded observations]\label{ass:bounded}
+The random variables $X_1,\ldots,X_n$ are independent and take values in $[0,1]$.
+\end{assumption}
+\begin{proposition}[Concentration of the sample mean]\label{prop:bound}
+Under \cref{ass:bounded}, let $\bar X_n=n^{-1}\sum_{i=1}^{n}X_i$.
+For every $\epsilon>0$,
+\[
+  \mathbb{P}\!\left(\left|\bar X_n-\mathbb{E}[\bar X_n]\right|\geq\epsilon\right)
+  \leq 2\exp(-2n\epsilon^2).
+\]
+\end{proposition}
+\begin{proof}
+Apply Hoeffding's inequality to the independent bounded summands. The
+upper and lower tails are each at most $\exp(-2n\epsilon^2)$; their union gives
+the stated bound.
+\end{proof}
+Write a statement with \verb|\begin{proposition}[Name]| and end it with
+\verb|\end{proposition}|. Follow it with a \texttt{proof} environment; the
+end-of-proof symbol is automatic.
+
+
+\subsection{Pseudocode}
+\texttt{algorithm2e} is included. Use \verb|\KwIn|, \verb|\KwOut|,
+\verb|\For|, and \verb|\If|; end statements with \verb|\;|.
+Do not also load \texttt{algorithm}, \texttt{algorithmic}, or \texttt{algpseudocode}.
+\begin{algorithm}[htbp]
+\caption{A minimal learning loop (typesetting example)}\label{alg:loop}
+\KwIn{Data $D$, initial parameters $\theta_0$, learning rates $(\eta_t)_{t=0}^{T-1}$}
+\KwOut{Parameters $\theta_T$}
+\For{$t\leftarrow 0$ \KwTo $T-1$}{
+  Compute $g_t\leftarrow\nabla\widehat{L}_n(\theta_t)$ on $D$\;
+  Update $\theta_{t+1}\leftarrow\theta_t-\eta_t g_t$\;
+}
+\Return{$\theta_T$}\;
+\end{algorithm}
+
+\clearpage
+\section{Tables that readers can compare}
+Use \texttt{booktabs} rules, descriptive captions above tables, and notes directly
+below. Avoid vertical rules, dense grids, and decorative shading. Define the
+metric, units, direction of improvement, number of seeds, and meaning of any
+uncertainty. Boldface is useful only when its meaning is stated. The values below
+are invented to demonstrate formatting; they are not experimental evidence.
+
+\begin{table}[htbp]
+\centering
+\caption{Illustrative performance over five seeds. Higher accuracy and lower
+runtime are better; $\pm$ denotes one sample standard deviation. Bold values
+identify the highest mean accuracy, without claiming statistical significance.}
+\label{tab:results}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}l
+  S[table-format=2.1(2)] S[table-format=3.1(2)] S[table-format=2.1]@{}}
+\toprule
+Method & {Accuracy (\% $\uparrow$)} & {Runtime (s $\downarrow$)} & {Memory (GB)}\\
+\midrule
+Baseline & 81.2 +- 0.8 & 125.3 +- 4.2 & 8.4\\
+Variant A & 83.7 +- 0.6 & 98.1 +- 3.7 & 9.1\\
+Variant B & \multicolumn{1}{c}{\bfseries 85.1 $\pm$ 0.5} & 102.4 +- 2.9 & 9.6\\
+\bottomrule
+\end{tabular*}
+\par\smallskip
+{\footnotesize Example setup: identical hardware and evaluation budgets for all methods.
+Report confidence intervals instead when appropriate, and describe their construction.\par}
+\end{table}
+
+\subsection{Align numbers without manual spacing}
+The \texttt{S} column from \texttt{siunitx} aligns decimals and handles uncertainty.
+\verb|table-format=3.1(2)| reserves three integer digits, one decimal, and two
+uncertainty digits. Write \verb|125.3 +- 4.2|; wrap text headers in braces.
+Use \verb|\num{10000}| for \num{10000} and \verb|\qty{12.5}{\second}| for
+\qty{12.5}{\second}. Keep units in headers when every row uses the same unit.
+\begin{lstlisting}
+\begin{table}[htbp]
+  \centering
+  \caption{Define the metric, uncertainty, and evaluation protocol.}
+  \label{tab:comparison}
+  \begin{tabular}{@{}l S[table-format=2.1(2)]@{}}
+    \toprule
+    Method & {Score (\%)}\\
+    \midrule
+    Baseline & 81.2 +- 0.8\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{lstlisting}
+For an exceptional bold cell, \verb|\multicolumn{1}{c}{\bfseries ...}|
+bypasses numeric parsing; retain the same precision as the other cells.
+
+\subsection{Give descriptive columns room to wrap}
+Use \texttt{tabularx} with \verb|\linewidth| and the provided \texttt{Y} column
+for prose. Ordinary \texttt{tabular} is better for compact numeric tables.
+\begin{table}[htbp]
+\caption{Illustrative ablations. Wrapping text preserves readable type at the normal page width.}
+\label{tab:ablations}
+\begin{tabularx}{\linewidth}{@{}lY S[table-format=2.1]@{}}
+\toprule
+Configuration & Change from the full method & {Score (\%)}\\
+\midrule
+Full method & All model components enabled. & 85.1\\
+No adaptation & Replace the adaptive schedule with a fixed schedule shared across tasks. & 82.4\\
+No regularization & Remove the penalty while keeping the same training budget. & 83.2\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage
+\section{Long results and supplementary material}
+\subsection{Choose the right table environment}
+Use a \texttt{table} float for a table that fits on one page. Use
+\texttt{longtable} directly in the document for a multi-page table; it is not
+placed inside a \texttt{table} float. Repeat column headings with
+\verb|\endfirsthead| and \verb|\endhead|. The appendix below provides an actual
+page-spanning example and its source can be copied directly.
+
+For a wide table, first shorten headings, wrap descriptive columns, or split
+results into meaningful groups. A local \verb|\small| and slightly reduced
+\verb|\tabcolsep| can help. Avoid shrinking an entire table with
+\verb|\resizebox|: it can make text and uncertainty unreadable. Put exhaustive
+results in an appendix when the main comparison would become hard to scan.
+
+\subsection{Let LaTeX place floats}
+Use \verb|[htbp]| and reference every table or algorithm in the text. A float may
+move to preserve readable pages; avoid forcing every object to an exact position.
+For multi-panel floats, \texttt{subcaption} is already available. Figure design
+and figure guidelines are outside this template's current scope.
+
+\subsection{Finish a research manuscript}
+After the discussion, include limitations, acknowledgments, and relevant
+availability or contribution statements. Acknowledge only funding and resources
+that apply to the actual study; do not copy another paper's grants. Keep the
+bibliography before the appendix, with one reference list for the whole document.
+\begin{lstlisting}
+\bibliographystyle{plainnat}
+\bibliography{references}
+\clearpage
+\appendix
+\input{appendix} % File begins with \section{...}.
+\end{lstlisting}
+Call \verb|\appendix| once. Section labels become A, B, and so on; theorem
+numbers follow the appendix section. Equations, tables, and algorithms keep
+continuous numbering, so every object has a unique number across the PDF.
+
+\subsection{Before sharing the preprint}
+Replace sample authors, links, guide prose, and invented numbers. Resolve all
+citations and references; inspect equations and tables, and verify author details.
+Include the style, bibliography, and every file loaded by \verb|\input| in your
+source. The ZIP omits the reference PDF and EPS; neither is needed to compile.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\clearpage
+\appendix
+\section{A table spanning multiple pages}\label{app:longtable}
+This appendix demonstrates repeated headings and continuation notes. The rows
+are a synthetic benchmark registry, not a description of a real experiment.
+A multi-page table uses the full text width without reducing its font size.
+\begingroup
+\small
+\setlength{\LTleft}{0pt}\setlength{\LTright}{0pt plus 1fill}
+\setlength{\LTcapwidth}{\textwidth}
+\begin{longtable}{@{}p{.17\textwidth}p{.66\textwidth}>{\raggedleft\arraybackslash}p{\dimexpr.17\textwidth-4\tabcolsep\relax}@{}}
+\caption{Illustrative benchmark registry. The rightmost column is an example seed count.}\label{tab:registry}\\
+\toprule
+Identifier & Evaluation setting & Seeds\\
+\midrule
+\endfirsthead
+\multicolumn{3}{@{}l@{}}{\small\textbf{Table \thetable.} Benchmark registry (continued).}\\[4pt]
+\toprule
+Identifier & Evaluation setting & Seeds\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r@{}}{\footnotesize Continued on the next page.}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\input{example-table-rows}
+\end{longtable}
+\endgroup
+\section{Extending the paper}\label{app:extensions}
+Use additional appendix sections for proofs, hyperparameters, implementation
+details, evaluation protocols, and further results. Continue to use descriptive
+labels and \verb|\cref|; for example, \cref{tab:registry,prop:bound} remain
+unambiguous. For a short appendix, write it directly in your main file. For a
+long supplement, use \verb|\input| to keep the source manageable while producing
+one PDF with working links and a shared bibliography.
 \end{document}

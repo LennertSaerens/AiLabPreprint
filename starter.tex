@@ -1,0 +1,56 @@
+% !TeX program = lualatex
+% Copy this file to main.tex to start a paper. See the original main.tex guide.
+\documentclass[11pt]{article}
+\usepackage{ailab-preprint} % Add [triangle] to show the VUB triangle.
+% Official title font: fonts/ITCAvantGardePro-Bold.otf (see fonts/README.md).
+
+\title{Your research title}
+\author{First Author\affil{1}, Second Author\affil{1,2}}
+\affiliations{\affil{1}Artificial Intelligence Lab, Vrije Universiteit Brussel, Belgium\\
+  \affil{2}Collaborating institution, City, Country}
+\preprintabstract{Replace this paragraph with the problem, your approach, the
+  main findings, and their implications.}
+% Optional fields: delete or uncomment as appropriate.
+% \date{17 November 2026}
+% \keywords{keyword one; keyword two}
+% \preprintnote{Authors marked with a dagger contributed equally.}
+
+% Add paper-specific notation here; keep the shared style unchanged.
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{sec:introduction}
+% Context, gap, related work, and contributions.
+Write your introduction here. Cite sources with \verb|\citet{key}| or
+\verb|\citep{key}|; replace the example bibliography with your own.
+
+\section{Problem setting}\label{sec:setting}
+% Define notation, assumptions, and the task.
+
+\section{Method}\label{sec:method}
+% Explain the method; add algorithms or theoretical results where useful.
+
+\section{Experiments}\label{sec:experiments}
+% Describe datasets, baselines, budgets, metrics, and uncertainty estimates.
+% Tables: caption above; booktabs rules; siunitx S columns for numbers.
+
+\section{Discussion}\label{sec:discussion}
+% Interpret the evidence and discuss limitations and future work.
+
+\section*{Acknowledgments}
+% Include only applicable support and funding.
+
+\section*{Data and code availability}
+% Add persistent links and access conditions.
+
+% BibTeX prints cited entries only. Uncomment when you add citations.
+% \bibliographystyle{plainnat}
+% \bibliography{references}
+
+\clearpage
+\appendix
+\section{Additional details}\label{app:details}
+% Add proofs, implementation details, and supplementary results.
+\end{document}
