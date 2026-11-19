@@ -165,8 +165,20 @@
     \ailab@optional{}{\ailab@note}
   \end{tcolorbox}
   \ifx\ailab@abstract\@empty\else
-    {\sffamily\small\bfseries\color{VUBBlue}Abstract\par}\nobreak
-    \vspace{3pt}{\justifying\setlength{\parindent}{0pt}\normalsize\ailab@abstract\par}
+    \begin{list}{}{%
+      \setlength{\leftmargin}{0.08\linewidth}%
+      \setlength{\rightmargin}{0.08\linewidth}%
+      \setlength{\topsep}{-\parskip}%
+      \setlength{\partopsep}{0pt}%
+      \setlength{\itemsep}{0pt}%
+      \setlength{\parsep}{\parskip}%
+      \setlength{\listparindent}{0pt}%
+    }
+    \item\relax
+    {\centering\sffamily\small\bfseries\color{VUBBlue}Abstract\par}\nobreak
+    \vspace{3pt}%
+    {\justifying\setlength{\parindent}{0pt}\normalsize\ailab@abstract\par}
+    \end{list}
   \fi
   \ailab@optional{Keywords:}{\ailab@keywords}
   \par\vspace{10pt}
