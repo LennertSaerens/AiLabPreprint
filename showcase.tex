@@ -1,0 +1,55 @@
+% !TeX program = lualatex
+% Single-page compact showcase of all core template features.
+\documentclass[11pt]{article}
+\usepackage{ailab-preprint}
+
+\title{AI Research Preprint Showcase}
+\author{First Author\affil{1}, Second Author\affil{1,2}, Third Author\affil{2}}
+\affiliations{\affil{1}Artificial Intelligence Lab, Vrije Universiteit Brussel \quad
+  \affil{2}Collaborating Institution, City, Country}
+\date{}
+\preprintabstract{A compact single-page showcase of the VUB AI Lab preprint template.}
+\keywords{research preprints; optimization; concentration bounds}
+
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+\maketitle
+
+\section{Problem setting and theory}\label{sec:theory}
+Following \citet{bessa2026emeans}, we study risk minimization over $\symbf{\theta}\in\R^{d}$ \citep{saerensPreprint}.
+
+\subsection{Definitions and objective}\label{sec:defs}
+\begin{definition}[Empirical risk]\label{def:risk}
+For samples $\{(x_i,y_i)\}_{i=1}^{n}$ and hypothesis $f_{\symbf{\theta}}$, define
+\begin{equation}\label{eq:risk}
+  \widehat{L}_n(\symbf{\theta}) = \frac{1}{n}\sum_{i=1}^{n}\ell\bigl(f_{\symbf{\theta}}(x_i),y_i\bigr),
+  \qquad
+  \operatorname{err}(\symbf{\theta}) = \mathbb{E}\bigl[\ell(f_{\symbf{\theta}}(X),Y)\bigr].
+\end{equation}
+\end{definition}
+
+\subsection{Convergence guarantee}\label{sec:guarantee}
+\begin{proposition}[Concentration]\label{prop:conc}
+If $\ell\in[0,1]$ and samples are i.i.d., then for any $\epsilon>0$ and fixed $\symbf{\theta}$,
+$\mathbb{P}\bigl(|\widehat{L}_n(\symbf{\theta})-\operatorname{err}(\symbf{\theta})|\geq\epsilon\bigr)\leq 2\exp(-2n\epsilon^2)$.
+\end{proposition}
+\begin{proof}
+Each summand lies in $[0,1]$ with mean $\operatorname{err}(\symbf{\theta})$; Hoeffding's inequality applies.
+\end{proof}
+
+\section{Optimization algorithm}\label{sec:algo}
+\subsection{First-order update}\label{sec:sgd}
+\Cref{alg:sgd} minimizes \eqref{eq:risk} via gradient steps, matching \cref{prop:conc} at evaluation.
+\begin{algorithm}[htbp]
+\caption{Stochastic gradient optimization}\label{alg:sgd}
+\KwIn{Dataset $D$, initial parameters $\symbf{\theta}_0$, step sizes $(\eta_t)_{t=0}^{T-1}$}
+\For{$t\leftarrow 0$ \KwTo $T-1$}{
+  $\symbf{\theta}_{t+1}\leftarrow\symbf{\theta}_t-\eta_t\nabla\widehat{L}_n(\symbf{\theta}_t)$ on $D$\;
+}
+\Return{$\symbf{\theta}_T$}\;
+\end{algorithm}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}
