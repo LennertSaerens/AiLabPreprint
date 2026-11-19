@@ -88,9 +88,3 @@ printed HEX values; secondary RGB values in that guide differ from its HEX
 values. The panel is a lighter tint of gray-blue. Body text and math retain
 Libertinus; the title is configured for the official ITC Avant Garde Gothic font.
 The supplied EPS is not loaded or included in the Overleaf bundle.
-
-The opening layout is inspired by [Bessa et al.](https://arxiv.org/pdf/2611.09501).
-The supported research structures reflect the
-[TTPFTS manuscript](https://github.com/LennertSaerens/TTPFTS-preprint): theory,
-algorithms, numerical tables, acknowledgments, references, and appendices.
-Example results are invented and marked as illustrative.
